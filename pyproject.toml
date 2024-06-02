@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "mongodb-transactions"
+version = "0.1.0"
+description = "Tests for learning mongo transactions"
+authors = ["Nicolas Rios <dnicolas.rios98@gmail.com>"]
+readme = "README.md"
+packages = [{include = "mongodb-transactions"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pymongo = "^4.7.2"
+motor = "^3.4.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.1"
+pytest-asyncio = "^0.23.7"
+pytest-mongodb = "^2.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
