@@ -13,6 +13,9 @@ services:
       interval: 2s
       timeout: 3s
       retries: 5
+    volumes:
+      - /var/lib/mongodb:/data/db # This should connect to you local mongo dbs
+
 
   mongo-init:
     image: mongo:5.0
