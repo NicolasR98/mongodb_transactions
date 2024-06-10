@@ -1,34 +1,24 @@
-version: '3.9'
-
 services:
-  mongodb:
-    image: mongo:5.0
-    command: --replSet rs0
+  mongo1:
+    image: mongo:6
+    command:
+      [
+        "--replSet",
+        "rs0",
+        "--bind_ip_all",
+        "--port",
+        "27017"
+      ]
     ports:
-      - "27018:27017"
-    environment:
-      MONGO_INITDB_DATABASE: test_transactions
-    volumes:
-      - /data/mongo5:/data/db
+      - 27017:27017
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/admin --quiet
-      interval: 2s
-      timeout: 3s
-      retries: 5
-
-  mongo-init:
-    image: mongo:5.0
-    restart: "no"
-    depends_on:
-      mongodb:
-        condition: service_healthy
-    command: >
-      mongo --host mongodb:27017 --eval
-      '
-      rs.initiate( {
-         _id : "rs0",
-         members: [
-            { _id: 0, host: "mongodb:27017" }
-         ]
-      })
-      '
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+    volumes:
+      - /var/lib/mongodb:/data/db
