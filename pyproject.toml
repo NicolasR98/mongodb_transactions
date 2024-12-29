@@ -10,15 +10,16 @@ packages = [{include = "mongodb-transactions"}]
 location = ".env"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-pymongo = "^4.7.2"
-motor = "^3.4.0"
+python = "^3.12"
+pymongo = "^4.9.0"
+motor = "^3.6.0"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.1"
 pytest-asyncio = "^0.23.7"
 pytest-mongodb = "^2.4.0"
+pytest-mock = "^3.14.0"
 
 
 [build-system]

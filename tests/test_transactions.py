@@ -79,7 +79,7 @@ async def test_transaction_abort(test_coll):
                 await test_coll.insert_one({"name": "Doe"}, session=session)
                 raise Exception("Fake error")
         except Exception:
-            session.abort_transaction()
+            pass
 
     docs = await test_coll.find().to_list(length=100)
     assert len(docs) == 0
